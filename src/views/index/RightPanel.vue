@@ -26,7 +26,7 @@
                   :value="item.__config__.tagIcon"
                 >
                   <svg-icon class="node-icon" :icon-class="item.__config__.tagIcon" />
-                  <span> {{ item.__config__.label }}</span>
+                  <span>{{ item.__config__.label }}</span>
                 </el-option>
               </el-option-group>
             </el-select>
@@ -34,9 +34,10 @@
           <el-form-item v-if="activeData.__vModel__!==undefined" label="字段名">
             <el-input v-model="activeData.__vModel__" placeholder="请输入字段名（v-model）" />
           </el-form-item>
-          <el-form-item v-if="activeData.__config__.componentName!==undefined" label="组件名">
-            {{ activeData.__config__.componentName }}
-          </el-form-item>
+          <el-form-item
+            v-if="activeData.__config__.componentName!==undefined"
+            label="组件名"
+          >{{ activeData.__config__.componentName }}</el-form-item>
           <el-form-item v-if="activeData.__config__.label!==undefined" label="标题">
             <el-input v-model="activeData.__config__.label" placeholder="请输入标题" />
           </el-form-item>
@@ -50,7 +51,13 @@
             <el-input v-model="activeData['end-placeholder']" placeholder="请输入占位提示" />
           </el-form-item>
           <el-form-item v-if="activeData.__config__.span!==undefined" label="表单栅格">
-            <el-slider v-model="activeData.__config__.span" :max="24" :min="1" :marks="{12:''}" @change="spanChange" />
+            <el-slider
+              v-model="activeData.__config__.span"
+              :max="24"
+              :min="1"
+              :marks="{12:''}"
+              @change="spanChange"
+            />
           </el-form-item>
           <el-form-item v-if="activeData.__config__.layout==='rowFormItem'" label="栅格间隔">
             <el-input-number v-model="activeData.gutter" :min="0" placeholder="栅格间隔" />
@@ -61,7 +68,10 @@
               <el-radio-button label="flex" />
             </el-radio-group>
           </el-form-item>
-          <el-form-item v-if="activeData.justify!==undefined&&activeData.type==='flex'" label="水平排列">
+          <el-form-item
+            v-if="activeData.justify!==undefined&&activeData.type==='flex'"
+            label="水平排列"
+          >
             <el-select v-model="activeData.justify" placeholder="请选择水平排列" :style="{width: '100%'}">
               <el-option
                 v-for="(item, index) in justifyOptions"
@@ -79,7 +89,11 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="activeData.__config__.labelWidth!==undefined" label="标签宽度">
-            <el-input v-model.number="activeData.__config__.labelWidth" type="number" placeholder="请输入标签宽度" />
+            <el-input
+              v-model.number="activeData.__config__.labelWidth"
+              type="number"
+              placeholder="请输入标签宽度"
+            />
           </el-form-item>
           <el-form-item v-if="activeData.style&&activeData.style.width!==undefined" label="组件宽度">
             <el-input v-model="activeData.style.width" placeholder="请输入组件宽度" clearable />
@@ -107,24 +121,34 @@
               @input="$set(activeData, 'max', $event?$event:undefined)"
             />
           </el-form-item>
-          <el-form-item v-if="activeData.__slot__&&activeData.__slot__.prepend!==undefined" label="前缀">
+          <el-form-item
+            v-if="activeData.__slot__&&activeData.__slot__.prepend!==undefined"
+            label="前缀"
+          >
             <el-input v-model="activeData.__slot__.prepend" placeholder="请输入前缀" />
           </el-form-item>
-          <el-form-item v-if="activeData.__slot__&&activeData.__slot__.append!==undefined" label="后缀">
+          <el-form-item
+            v-if="activeData.__slot__&&activeData.__slot__.append!==undefined"
+            label="后缀"
+          >
             <el-input v-model="activeData.__slot__.append" placeholder="请输入后缀" />
           </el-form-item>
           <el-form-item v-if="activeData['prefix-icon']!==undefined" label="前图标">
             <el-input v-model="activeData['prefix-icon']" placeholder="请输入前图标名称">
-              <el-button slot="append" icon="el-icon-thumb" @click="openIconsDialog('prefix-icon')">
-                选择
-              </el-button>
+              <el-button
+                slot="append"
+                icon="el-icon-thumb"
+                @click="openIconsDialog('prefix-icon')"
+              >选择</el-button>
             </el-input>
           </el-form-item>
           <el-form-item v-if="activeData['suffix-icon'] !== undefined" label="后图标">
             <el-input v-model="activeData['suffix-icon']" placeholder="请输入后图标名称">
-              <el-button slot="append" icon="el-icon-thumb" @click="openIconsDialog('suffix-icon')">
-                选择
-              </el-button>
+              <el-button
+                slot="append"
+                icon="el-icon-thumb"
+                @click="openIconsDialog('suffix-icon')"
+              >选择</el-button>
             </el-input>
           </el-form-item>
           <el-form-item
@@ -132,9 +156,7 @@
             label="按钮图标"
           >
             <el-input v-model="activeData['icon']" placeholder="请输入按钮图标名称">
-              <el-button slot="append" icon="el-icon-thumb" @click="openIconsDialog('icon')">
-                选择
-              </el-button>
+              <el-button slot="append" icon="el-icon-thumb" @click="openIconsDialog('icon')">选择</el-button>
             </el-input>
           </el-form-item>
           <el-form-item v-if="activeData.__config__.tag === 'el-cascader'" label="选项分隔符">
@@ -163,19 +185,13 @@
           </el-form-item>
           <el-form-item v-if="activeData.__config__.tag === 'el-input-number'" label="按钮位置">
             <el-radio-group v-model="activeData['controls-position']">
-              <el-radio-button label="">
-                默认
-              </el-radio-button>
-              <el-radio-button label="right">
-                右侧
-              </el-radio-button>
+              <el-radio-button label>默认</el-radio-button>
+              <el-radio-button label="right">右侧</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="activeData.maxlength !== undefined" label="最多输入">
             <el-input v-model="activeData.maxlength" placeholder="请输入字符长度">
-              <template slot="append">
-                个字符
-              </template>
+              <template slot="append">个字符</template>
             </el-input>
           </el-form-item>
           <el-form-item v-if="activeData['active-text'] !== undefined" label="开启提示">
@@ -237,7 +253,11 @@
           </el-form-item>
           <el-form-item v-if="activeData.__config__.fileSize !== undefined" label="文件大小">
             <el-input v-model.number="activeData.__config__.fileSize" placeholder="请输入文件大小">
-              <el-select slot="append" v-model="activeData.__config__.sizeUnit" :style="{ width: '66px' }">
+              <el-select
+                slot="append"
+                v-model="activeData.__config__.sizeUnit"
+                :style="{ width: '66px' }"
+              >
                 <el-option label="KB" value="KB" />
                 <el-option label="MB" value="MB" />
                 <el-option label="GB" value="GB" />
@@ -249,15 +269,9 @@
           </el-form-item>
           <el-form-item v-if="activeData['list-type'] !== undefined" label="列表类型">
             <el-radio-group v-model="activeData['list-type']" size="small">
-              <el-radio-button label="text">
-                text
-              </el-radio-button>
-              <el-radio-button label="picture">
-                picture
-              </el-radio-button>
-              <el-radio-button label="picture-card">
-                picture-card
-              </el-radio-button>
+              <el-radio-button label="text">text</el-radio-button>
+              <el-radio-button label="picture">picture</el-radio-button>
+              <el-radio-button label="picture-card">picture-card</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item
@@ -284,10 +298,7 @@
             <el-input v-model="activeData['range-separator']" placeholder="请输入分隔符" />
           </el-form-item>
           <el-form-item v-if="activeData['picker-options'] !== undefined" label="时间段">
-            <el-input
-              v-model="activeData['picker-options'].selectableRange"
-              placeholder="请输入时间段"
-            />
+            <el-input v-model="activeData['picker-options'].selectableRange" placeholder="请输入时间段" />
           </el-form-item>
           <el-form-item v-if="activeData.format !== undefined" label="时间格式">
             <el-input
@@ -296,7 +307,9 @@
               @input="setTimeValue($event)"
             />
           </el-form-item>
-          <template v-if="['el-checkbox-group', 'el-radio-group', 'el-select'].indexOf(activeData.__config__.tag) > -1">
+          <template
+            v-if="['el-checkbox-group', 'el-radio-group', 'el-select','el-tabs'].indexOf(activeData.__config__.tag) > -1 && activeData.__slot__.options != undefined"
+          >
             <el-divider>选项</el-divider>
             <draggable
               :list="activeData.__slot__.options"
@@ -304,7 +317,11 @@
               group="selectItem"
               handle=".option-drag"
             >
-              <div v-for="(item, index) in activeData.__slot__.options" :key="index" class="select-item">
+              <div
+                v-for="(item, index) in activeData.__slot__.options"
+                :key="index"
+                class="select-item"
+              >
                 <div class="select-line-icon option-drag">
                   <i class="el-icon-s-operation" />
                 </div>
@@ -315,7 +332,10 @@
                   :value="item.value"
                   @input="setOptionValue(item, $event)"
                 />
-                <div class="close-btn select-line-icon" @click="activeData.__slot__.options.splice(index, 1)">
+                <div
+                  class="close-btn select-line-icon"
+                  @click="activeData.__slot__.options.splice(index, 1)"
+                >
                   <i class="el-icon-remove-outline" />
                 </div>
               </div>
@@ -326,10 +346,23 @@
                 icon="el-icon-circle-plus-outline"
                 type="text"
                 @click="addSelectItem"
-              >
-                添加选项
-              </el-button>
+              >添加选项</el-button>
             </div>
+            <el-divider />
+          </template>
+
+          <template
+            v-if="activeData.__slot__ !== undefined && activeData.__slot__.bgConfig !== undefined"
+          >
+            <el-divider>后台配置</el-divider>
+            <el-form-item v-if="activeData.__slot__.bgConfig !== undefined" label="后台配置">
+              <el-input
+              type="textarea"
+                v-model="activeData.__slot__.bgConfig.httpJson"
+                placeholder="请输入后台配置json结构"
+                clearable
+              />
+            </el-form-item>
             <el-divider />
           </template>
 
@@ -337,12 +370,8 @@
             <el-divider>选项</el-divider>
             <el-form-item label="数据类型">
               <el-radio-group v-model="activeData.__config__.dataType" size="small">
-                <el-radio-button label="dynamic">
-                  动态数据
-                </el-radio-button>
-                <el-radio-button label="static">
-                  静态数据
-                </el-radio-button>
+                <el-radio-button label="dynamic">动态数据</el-radio-button>
+                <el-radio-button label="static">静态数据</el-radio-button>
               </el-radio-group>
             </el-form-item>
 
@@ -373,21 +402,15 @@
                 icon="el-icon-circle-plus-outline"
                 type="text"
                 @click="addTreeItem"
-              >
-                添加父级
-              </el-button>
+              >添加父级</el-button>
             </div>
             <el-divider />
           </template>
 
           <el-form-item v-if="activeData.__config__.optionType !== undefined" label="选项样式">
             <el-radio-group v-model="activeData.__config__.optionType">
-              <el-radio-button label="default">
-                默认
-              </el-radio-button>
-              <el-radio-button label="button">
-                按钮
-              </el-radio-button>
+              <el-radio-button label="default">默认</el-radio-button>
+              <el-radio-button label="button">按钮</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="activeData['active-color'] !== undefined" label="开启颜色">
@@ -397,8 +420,10 @@
             <el-color-picker v-model="activeData['inactive-color']" />
           </el-form-item>
 
-          <el-form-item v-if="activeData.__config__.showLabel !== undefined
-            && activeData.__config__.labelWidth !== undefined" label="显示标签"
+          <el-form-item
+            v-if="activeData.__config__.showLabel !== undefined
+            && activeData.__config__.labelWidth !== undefined"
+            label="显示标签"
           >
             <el-switch v-model="activeData.__config__.showLabel" />
           </el-form-item>
@@ -451,15 +476,9 @@
             label="组件尺寸"
           >
             <el-radio-group v-model="activeData.size">
-              <el-radio-button label="medium">
-                中等
-              </el-radio-button>
-              <el-radio-button label="small">
-                较小
-              </el-radio-button>
-              <el-radio-button label="mini">
-                迷你
-              </el-radio-button>
+              <el-radio-button label="medium">中等</el-radio-button>
+              <el-radio-button label="small">较小</el-radio-button>
+              <el-radio-button label="mini">迷你</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item v-if="activeData['show-word-limit'] !== undefined" label="输入统计">
@@ -516,7 +535,10 @@
             >
               <span slot-scope="{ node, data }">
                 <span class="node-label">
-                  <svg-icon class="node-icon" :icon-class="data.__config__?data.__config__.tagIcon:data.tagIcon" />
+                  <svg-icon
+                    class="node-icon"
+                    :icon-class="data.__config__?data.__config__.tagIcon:data.tagIcon"
+                  />
                   {{ node.label }}
                 </span>
               </span>
@@ -541,9 +563,7 @@
               </el-form-item>
             </div>
             <div style="margin-left: 20px">
-              <el-button icon="el-icon-circle-plus-outline" type="text" @click="addReg">
-                添加规则
-              </el-button>
+              <el-button icon="el-icon-circle-plus-outline" type="text" @click="addReg">添加规则</el-button>
             </div>
           </template>
         </el-form>
@@ -560,28 +580,16 @@
           </el-form-item>
           <el-form-item label="表单尺寸">
             <el-radio-group v-model="formConf.size">
-              <el-radio-button label="medium">
-                中等
-              </el-radio-button>
-              <el-radio-button label="small">
-                较小
-              </el-radio-button>
-              <el-radio-button label="mini">
-                迷你
-              </el-radio-button>
+              <el-radio-button label="medium">中等</el-radio-button>
+              <el-radio-button label="small">较小</el-radio-button>
+              <el-radio-button label="mini">迷你</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="标签对齐">
             <el-radio-group v-model="formConf.labelPosition">
-              <el-radio-button label="left">
-                左对齐
-              </el-radio-button>
-              <el-radio-button label="right">
-                右对齐
-              </el-radio-button>
-              <el-radio-button label="top">
-                顶部对齐
-              </el-radio-button>
+              <el-radio-button label="left">左对齐</el-radio-button>
+              <el-radio-button label="right">右对齐</el-radio-button>
+              <el-radio-button label="top">顶部对齐</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="标签宽度">
@@ -599,185 +607,220 @@
           <el-form-item label="显示未选中组件边框">
             <el-switch v-model="formConf.unFocusedComponentBorder" />
           </el-form-item>
+          <el-form-item label="后端请求URL地址">
+            <el-input type="textarea" v-model="backURL" placeholder="http://www.baidu.com" />
+          </el-form-item>
+          <el-form-item label="请求类型">
+            <el-select v-model="requestMethod" placeholder>
+              <el-option
+                v-for="reqMethod in requestMethodList"
+                :key="reqMethod.key"
+                :lable="reqMethod.value"
+                :value="reqMethod.value"
+              >
+                <span>{{ reqMethod.value }}</span>
+              </el-option>
+            </el-select>
+          </el-form-item>
         </el-form>
       </el-scrollbar>
     </div>
 
     <treeNode-dialog :visible.sync="dialogVisible" title="添加选项" @commit="addNode" />
-    <icons-dialog :visible.sync="iconsVisible" :current="activeData[currentIconModel]" @select="setIcon" />
+    <icons-dialog
+      :visible.sync="iconsVisible"
+      :current="activeData[currentIconModel]"
+      @select="setIcon"
+    />
   </div>
 </template>
 
 <script>
-import { isArray } from 'util'
-import TreeNodeDialog from '@/views/index/TreeNodeDialog'
-import { isNumberStr } from '@/utils/index'
-import IconsDialog from './IconsDialog'
+import { isArray } from "util";
+import TreeNodeDialog from "@/views/index/TreeNodeDialog";
+import { isNumberStr } from "@/utils/index";
+import IconsDialog from "./IconsDialog";
 import {
-  inputComponents, selectComponents, layoutComponents
-} from '@/components/generator/config'
-import { saveFormConf } from '@/utils/db'
+  inputComponents,
+  selectComponents,
+  layoutComponents
+} from "@/components/generator/config";
+import { saveFormConf } from "@/utils/db";
 
 const dateTimeFormat = {
-  date: 'yyyy-MM-dd',
-  week: 'yyyy 第 WW 周',
-  month: 'yyyy-MM',
-  year: 'yyyy',
-  datetime: 'yyyy-MM-dd HH:mm:ss',
-  daterange: 'yyyy-MM-dd',
-  monthrange: 'yyyy-MM',
-  datetimerange: 'yyyy-MM-dd HH:mm:ss'
-}
+  date: "yyyy-MM-dd",
+  week: "yyyy 第 WW 周",
+  month: "yyyy-MM",
+  year: "yyyy",
+  datetime: "yyyy-MM-dd HH:mm:ss",
+  daterange: "yyyy-MM-dd",
+  monthrange: "yyyy-MM",
+  datetimerange: "yyyy-MM-dd HH:mm:ss"
+};
 
 export default {
   components: {
     TreeNodeDialog,
     IconsDialog
   },
-  props: ['showField', 'activeData', 'formConf'],
+  props: ["showField", "activeData", "formConf"],
   data() {
     return {
-      currentTab: 'field',
+      currentTab: "field",
       currentNode: null,
       dialogVisible: false,
       iconsVisible: false,
       currentIconModel: null,
+      backURL: "http://www.baidu.com",
+      requestMethod: "post",
+      requestMethodList: [
+        {
+          key: "post",
+          value: "post"
+        },
+        {
+          key: "get",
+          value: "get"
+        }
+      ],
       dateTypeOptions: [
         {
-          label: '日(date)',
-          value: 'date'
+          label: "日(date)",
+          value: "date"
         },
         {
-          label: '周(week)',
-          value: 'week'
+          label: "周(week)",
+          value: "week"
         },
         {
-          label: '月(month)',
-          value: 'month'
+          label: "月(month)",
+          value: "month"
         },
         {
-          label: '年(year)',
-          value: 'year'
+          label: "年(year)",
+          value: "year"
         },
         {
-          label: '日期时间(datetime)',
-          value: 'datetime'
+          label: "日期时间(datetime)",
+          value: "datetime"
         }
       ],
       dateRangeTypeOptions: [
         {
-          label: '日期范围(daterange)',
-          value: 'daterange'
+          label: "日期范围(daterange)",
+          value: "daterange"
         },
         {
-          label: '月范围(monthrange)',
-          value: 'monthrange'
+          label: "月范围(monthrange)",
+          value: "monthrange"
         },
         {
-          label: '日期时间范围(datetimerange)',
-          value: 'datetimerange'
+          label: "日期时间范围(datetimerange)",
+          value: "datetimerange"
         }
       ],
       colorFormatOptions: [
         {
-          label: 'hex',
-          value: 'hex'
+          label: "hex",
+          value: "hex"
         },
         {
-          label: 'rgb',
-          value: 'rgb'
+          label: "rgb",
+          value: "rgb"
         },
         {
-          label: 'rgba',
-          value: 'rgba'
+          label: "rgba",
+          value: "rgba"
         },
         {
-          label: 'hsv',
-          value: 'hsv'
+          label: "hsv",
+          value: "hsv"
         },
         {
-          label: 'hsl',
-          value: 'hsl'
+          label: "hsl",
+          value: "hsl"
         }
       ],
       justifyOptions: [
         {
-          label: 'start',
-          value: 'start'
+          label: "start",
+          value: "start"
         },
         {
-          label: 'end',
-          value: 'end'
+          label: "end",
+          value: "end"
         },
         {
-          label: 'center',
-          value: 'center'
+          label: "center",
+          value: "center"
         },
         {
-          label: 'space-around',
-          value: 'space-around'
+          label: "space-around",
+          value: "space-around"
         },
         {
-          label: 'space-between',
-          value: 'space-between'
+          label: "space-between",
+          value: "space-between"
         }
       ],
       layoutTreeProps: {
         label(data, node) {
-          const config = data.__config__
-          return data.componentName || `${config.label}: ${data.__vModel__}`
+          const config = data.__config__;
+          return data.componentName || `${config.label}: ${data.__vModel__}`;
         }
       }
-    }
+    };
   },
   computed: {
     documentLink() {
       return (
-        this.activeData.__config__.document
-        || 'https://element.eleme.cn/#/zh-CN/component/installation'
-      )
+        this.activeData.__config__.document ||
+        "https://element.eleme.cn/#/zh-CN/component/installation"
+      );
     },
     dateOptions() {
       if (
-        this.activeData.type !== undefined
-        && this.activeData.__config__.tag === 'el-date-picker'
+        this.activeData.type !== undefined &&
+        this.activeData.__config__.tag === "el-date-picker"
       ) {
-        if (this.activeData['start-placeholder'] === undefined) {
-          return this.dateTypeOptions
+        if (this.activeData["start-placeholder"] === undefined) {
+          return this.dateTypeOptions;
         }
-        return this.dateRangeTypeOptions
+        return this.dateRangeTypeOptions;
       }
-      return []
+      return [];
     },
     tagList() {
       return [
         {
-          label: '输入型组件',
+          label: "输入型组件",
           options: inputComponents
         },
         {
-          label: '选择型组件',
+          label: "选择型组件",
           options: selectComponents
         }
-      ]
+      ];
     },
     activeTag() {
-      return this.activeData.__config__.tag
+      return this.activeData.__config__.tag;
     },
     isShowMin() {
-      return ['el-input-number', 'el-slider'].indexOf(this.activeTag) > -1
+      return ["el-input-number", "el-slider"].indexOf(this.activeTag) > -1;
     },
     isShowMax() {
-      return ['el-input-number', 'el-slider', 'el-rate'].indexOf(this.activeTag) > -1
+      return (
+        ["el-input-number", "el-slider", "el-rate"].indexOf(this.activeTag) > -1
+      );
     },
     isShowStep() {
-      return ['el-input-number', 'el-slider'].indexOf(this.activeTag) > -1
+      return ["el-input-number", "el-slider"].indexOf(this.activeTag) > -1;
     }
   },
   watch: {
     formConf: {
       handler(val) {
-        saveFormConf(val)
+        saveFormConf(val);
       },
       deep: true
     }
@@ -785,147 +828,154 @@ export default {
   methods: {
     addReg() {
       this.activeData.__config__.regList.push({
-        pattern: '',
-        message: ''
-      })
+        pattern: "",
+        message: ""
+      });
     },
     addSelectItem() {
       this.activeData.__slot__.options.push({
-        label: '',
-        value: ''
-      })
+        label: "",
+        value: ""
+      });
     },
     addTreeItem() {
-      ++this.idGlobal
-      this.dialogVisible = true
-      this.currentNode = this.activeData.options
+      ++this.idGlobal;
+      this.dialogVisible = true;
+      this.currentNode = this.activeData.options;
     },
     renderContent(h, { node, data, store }) {
       return (
         <div class="custom-tree-node">
           <span>{node.label}</span>
           <span class="node-operation">
-            <i on-click={() => this.append(data)}
+            <i
+              on-click={() => this.append(data)}
               class="el-icon-plus"
               title="添加"
             ></i>
-            <i on-click={() => this.remove(node, data)}
+            <i
+              on-click={() => this.remove(node, data)}
               class="el-icon-delete"
               title="删除"
             ></i>
           </span>
         </div>
-      )
+      );
     },
     append(data) {
       if (!data.children) {
-        this.$set(data, 'children', [])
+        this.$set(data, "children", []);
       }
-      this.dialogVisible = true
-      this.currentNode = data.children
+      this.dialogVisible = true;
+      this.currentNode = data.children;
     },
     remove(node, data) {
-      this.activeData.__config__.defaultValue = [] // 避免删除时报错
-      const { parent } = node
-      const children = parent.data.children || parent.data
-      const index = children.findIndex(d => d.id === data.id)
-      children.splice(index, 1)
+      this.activeData.__config__.defaultValue = []; // 避免删除时报错
+      const { parent } = node;
+      const children = parent.data.children || parent.data;
+      const index = children.findIndex(d => d.id === data.id);
+      children.splice(index, 1);
     },
     addNode(data) {
-      this.currentNode.push(data)
+      this.currentNode.push(data);
     },
     setOptionValue(item, val) {
-      item.value = isNumberStr(val) ? +val : val
+      item.value = isNumberStr(val) ? +val : val;
     },
     setDefaultValue(val) {
       if (Array.isArray(val)) {
-        return val.join(',')
+        return val.join(",");
       }
       // if (['string', 'number'].indexOf(typeof val) > -1) {
       //   return val
       // }
-      if (typeof val === 'boolean') {
-        return `${val}`
+      if (typeof val === "boolean") {
+        return `${val}`;
       }
-      return val
+      return val;
     },
     onDefaultValueInput(str) {
       if (isArray(this.activeData.__config__.defaultValue)) {
         // 数组
         this.$set(
           this.activeData.__config__,
-          'defaultValue',
-          str.split(',').map(val => (isNumberStr(val) ? +val : val))
-        )
-      } else if (['true', 'false'].indexOf(str) > -1) {
+          "defaultValue",
+          str.split(",").map(val => (isNumberStr(val) ? +val : val))
+        );
+      } else if (["true", "false"].indexOf(str) > -1) {
         // 布尔
-        this.$set(this.activeData.__config__, 'defaultValue', JSON.parse(str))
+        this.$set(this.activeData.__config__, "defaultValue", JSON.parse(str));
       } else {
         // 字符串和数字
         this.$set(
           this.activeData.__config__,
-          'defaultValue',
+          "defaultValue",
           isNumberStr(str) ? +str : str
-        )
+        );
       }
     },
     onSwitchValueInput(val, name) {
-      if (['true', 'false'].indexOf(val) > -1) {
-        this.$set(this.activeData, name, JSON.parse(val))
+      if (["true", "false"].indexOf(val) > -1) {
+        this.$set(this.activeData, name, JSON.parse(val));
       } else {
-        this.$set(this.activeData, name, isNumberStr(val) ? +val : val)
+        this.$set(this.activeData, name, isNumberStr(val) ? +val : val);
       }
     },
     setTimeValue(val, type) {
-      const valueFormat = type === 'week' ? dateTimeFormat.date : val
-      this.$set(this.activeData.__config__, 'defaultValue', null)
-      this.$set(this.activeData, 'value-format', valueFormat)
-      this.$set(this.activeData, 'format', val)
+      const valueFormat = type === "week" ? dateTimeFormat.date : val;
+      this.$set(this.activeData.__config__, "defaultValue", null);
+      this.$set(this.activeData, "value-format", valueFormat);
+      this.$set(this.activeData, "format", val);
     },
     spanChange(val) {
-      this.formConf.span = val
+      this.formConf.span = val;
     },
     multipleChange(val) {
-      this.$set(this.activeData.__config__, 'defaultValue', val ? [] : '')
+      this.$set(this.activeData.__config__, "defaultValue", val ? [] : "");
     },
     dateTypeChange(val) {
-      this.setTimeValue(dateTimeFormat[val], val)
+      this.setTimeValue(dateTimeFormat[val], val);
     },
     rangeChange(val) {
       this.$set(
         this.activeData.__config__,
-        'defaultValue',
+        "defaultValue",
         val ? [this.activeData.min, this.activeData.max] : this.activeData.min
-      )
+      );
     },
     rateTextChange(val) {
-      if (val) this.activeData['show-score'] = false
+      if (val) this.activeData["show-score"] = false;
     },
     rateScoreChange(val) {
-      if (val) this.activeData['show-text'] = false
+      if (val) this.activeData["show-text"] = false;
     },
     colorFormatChange(val) {
-      this.activeData.__config__.defaultValue = null
-      this.activeData['show-alpha'] = val.indexOf('a') > -1
-      this.activeData.__config__.renderKey = +new Date() // 更新renderKey,重新渲染该组件
+      this.activeData.__config__.defaultValue = null;
+      this.activeData["show-alpha"] = val.indexOf("a") > -1;
+      this.activeData.__config__.renderKey = +new Date(); // 更新renderKey,重新渲染该组件
     },
     openIconsDialog(model) {
-      this.iconsVisible = true
-      this.currentIconModel = model
+      this.iconsVisible = true;
+      this.currentIconModel = model;
     },
     setIcon(val) {
-      this.activeData[this.currentIconModel] = val
+      this.activeData[this.currentIconModel] = val;
     },
     tagChange(tagIcon) {
-      let target = inputComponents.find(item => item.__config__.tagIcon === tagIcon)
-      if (!target) target = selectComponents.find(item => item.__config__.tagIcon === tagIcon)
-      this.$emit('tag-change', target)
+      let target = inputComponents.find(
+        item => item.__config__.tagIcon === tagIcon
+      );
+      if (!target)
+        target = selectComponents.find(
+          item => item.__config__.tagIcon === tagIcon
+        );
+      this.$emit("tag-change", target);
     },
     changeRenderKey() {
-      this.activeData.__config__.renderKey = +new Date()
+      this.activeData.__config__.renderKey = +new Date();
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -996,10 +1046,10 @@ export default {
   color: #fff;
   font-size: 18px;
 }
-.node-label{
+.node-label {
   font-size: 14px;
 }
-.node-icon{
+.node-icon {
   color: #bebfc3;
 }
 </style>

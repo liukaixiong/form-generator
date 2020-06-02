@@ -183,6 +183,33 @@ export const selectComponents = [
   },
   {
     __config__: {
+      label: '动态下拉选择',
+      showLabel: true,
+      labelWidth: null,
+      tag: 'el-select',
+      tagIcon: 'select',
+      defaultValue: undefined,
+      layout: 'colFormItem',
+      span: 24,
+      required: true,
+      regList: [],
+      changeTag: true,
+      document: 'https://element.eleme.cn/#/zh-CN/component/select'
+    },
+    __slot__: {
+      bgConfig: {
+        httpJson: null,
+      }
+    },
+    placeholder: '请选择',
+    style: { width: '100%' },
+    clearable: true,
+    disabled: false,
+    filterable: false,
+    multiple: false
+  },
+  {
+    __config__: {
       label: '级联选择',
       showLabel: true,
       labelWidth: null,
@@ -502,7 +529,63 @@ export const selectComponents = [
     'auto-upload': true,
     'list-type': 'text',
     multiple: false
-  }
+  },
+  {
+    __config__: {
+      label: '穿梭框',
+      tag: 'el-transfer',
+      tagIcon: 'transfer',
+      layout: 'colFormItem',
+      defaultValue: [],
+      showLabel: true,
+      labelWidth: null,
+      required: true,
+      span: 24,
+      showTip: false,
+      regList: [],
+      changeTag: true,
+      document: 'https://element.eleme.cn/#/zh-CN/component/transfer'
+    },
+    __slot__: {
+    },
+    // disabled: false,
+    titles: ['可选值', '应用值'],
+    // buttonTexts: ['>', '<'],
+    filterPlaceholder: '请输入123',
+    filterable: true ,
+    data:[{"key":1,"label":"备选项 1","disabled":false},{"key":2,"label":"备选项 2","disabled":false},{"key":3,"label":"备选项 3","disabled":false},{"key":4,"label":"备选项 4","disabled":true},{"key":5,"label":"备选项 5","disabled":false},{"key":6,"label":"备选项 6","disabled":false},{"key":7,"label":"备选项 7","disabled":false},{"key":8,"label":"备选项 8","disabled":true},{"key":9,"label":"备选项 9","disabled":false},{"key":10,"label":"备选项 10","disabled":false},{"key":11,"label":"备选项 11","disabled":false},{"key":12,"label":"备选项 12","disabled":true},{"key":13,"label":"备选项 13","disabled":false},{"key":14,"label":"备选项 14","disabled":false},{"key":15,"label":"备选项 15","disabled":false}]
+  },
+  {
+    __config__: {
+      label: '标签页',
+      showLabel: true,
+      labelWidth: null,
+      tag: 'el-tabs',
+      children: [],
+      tagIcon: 'select',
+      defaultValue: [2],
+      layout: 'draggableFormItem',
+      span: 24,
+      required: true,
+      regList: [],
+      changeTag: true,
+      document: 'https://element.eleme.cn/#/zh-CN/component/tabs'
+    },
+    __slot__: {
+      options: [{
+        label: '选项一',
+        value: '1'
+      }, {
+        label: '选项二',
+        value: '2'
+      }]
+    },
+    placeholder: '请选择',
+    style: { width: '100%' },
+    clearable: true,
+    disabled: false,
+    filterable: false
+  },
 ]
 
 // 布局型组件 【左面板】

@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: ['plugin:vue/recommended', 'eslint:recommended', 'airbnb-base'],
   rules: {
+    'quotes': [0, "single"],
     'linebreak-style': 0,
     'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -14,7 +15,7 @@ module.exports = {
     'import/extensions': 0,
     'import/no-unresolved': 0,
     'comma-dangle': [2, 'never'],
-    semi: [2, 'never'],
+    semi: [0, 'never'],
     'no-unused-expressions': 0,
     'no-plusplus': 0,
     'import/prefer-default-export': 0,
@@ -23,6 +24,16 @@ module.exports = {
     'no-underscore-dangle': 0,
     'arrow-parens': [2, 'as-needed'],
     'vue/max-attributes-per-line': 0,
+    'generator-star-spacing': 'off',
+    "vue/html-self-closing": ["error",{
+      "html": {
+        "void": "never",
+        "normal": "any",
+        "component": "any"
+      },
+      "svg": "always",
+      "math": "always"
+    }],
     'max-len': [
       1,
       {

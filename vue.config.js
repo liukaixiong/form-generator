@@ -39,13 +39,15 @@ module.exports = {
     overlay: false
   },
   productionSourceMap: false,
+  lintOnSave: false, // 是否在保存的时候关闭lint校验
   configureWebpack: {
     externals: {
       vue: 'Vue',
       'vue-router': 'VueRouter',
       axios: 'axios',
       'element-ui': 'ELEMENT'
-    }
+    },
+    devtool: 'source-map' // 开启源码调试
   },
   chainWebpack(config) {
     // set svg-sprite-loader

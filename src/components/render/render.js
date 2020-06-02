@@ -1,6 +1,8 @@
 function vModel(self, dataObject, defaultValue) {
   dataObject.props.value = defaultValue
 
+
+
   dataObject.on.input = val => {
     self.$emit('input', val)
   }
@@ -26,9 +28,10 @@ export default {
       attrs: {},
       props: {},
       on: {},
-      style: {}
+      style: {},
     }
     const confClone = JSON.parse(JSON.stringify(this.conf))
+    
     const children = []
 
     const childObjs = componentChild[confClone.__config__.tag]

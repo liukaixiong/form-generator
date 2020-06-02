@@ -226,6 +226,7 @@ export default {
     },
     drawingList: {
       handler(val) {
+        console.log("drawingList : ",val)
         this.saveDrawingListDebounce(val)
         if (val.length === 0) this.idGlobal = 100
       },
@@ -288,7 +289,7 @@ export default {
       config.formId = ++this.idGlobal
       config.span = this.formConf.span
       config.renderKey = +new Date() // 改变renderKey后可以实现强制更新组件
-      if (config.layout === 'colFormItem') {
+      if (config.layout === 'colFormItem' || config.layout === 'draggableFormItem') {
         clone.__vModel__ = `field${this.idGlobal}`
         clone.placeholder !== undefined && (clone.placeholder += config.label)
       } else if (config.layout === 'rowFormItem') {
@@ -339,7 +340,7 @@ export default {
       const config = item.__config__
       config.formId = ++this.idGlobal
       config.renderKey = +new Date()
-      if (config.layout === 'colFormItem') {
+      if (config.layout === 'colFormItem' || config.layout === 'draggableFormItem') {
         item.__vModel__ = `field${this.idGlobal}`
       } else if (config.layout === 'rowFormItem') {
         config.componentName = `row${this.idGlobal}`
@@ -376,6 +377,7 @@ export default {
       this.operationType = 'download'
     },
     run() {
+      console.log('asdfasdfs')
       this.dialogVisible = true
       this.showFileName = false
       this.operationType = 'run'
@@ -419,6 +421,9 @@ export default {
       this.drawingList = JSON.parse(JSON.stringify(data.fields))
       delete data.fields
       this.formConf = data
+    },
+    addDate(evn,data){
+      console.log('adddate',evn,data)
     }
   }
 }

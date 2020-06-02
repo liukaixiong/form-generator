@@ -110,6 +110,19 @@ const layouts = {
     </el-row>`
     str = colWrapper(scheme, str)
     return str
+  }, draggableFormItem(scheme) {
+    const config = scheme.__config__
+    const type = scheme.type === 'default' ? '' : `type="${scheme.type}"`
+    const justify = scheme.type === 'default' ? '' : `justify="${scheme.justify}"`
+    const align = scheme.type === 'default' ? '' : `align="${scheme.align}"`
+    const gutter = scheme.gutter ? `:gutter="${scheme.gutter}"` : ''
+    const tagDom = tags[config.tag] ? tags[config.tag](scheme) : null
+    const children = config.children.map(el => layouts[el.__config__.layout](el))
+    let str = `<el-row ${type} ${justify} ${align} ${gutter}>
+      ${tagDom}
+    </el-row>`
+    str = colWrapper(scheme, str)
+    return str
   }
 }
 
@@ -290,6 +303,23 @@ const tags = {
     const height = el.height ? `:height="${el.height}"` : ''
     const branding = el.branding ? `:branding="${el.branding}"` : ''
     return `<${tag} ${vModel} ${height} ${branding}></${tag}>`
+  },
+  'el-tabs': el => {
+    const {
+      tag, disabled
+    } = attrBuilder(el);
+    const childrenList = attrConfigBuilder(el);
+    const type = el.type ? `type="${el.type}"` : ''
+    const icon = el.icon ? `icon="${el.icon}"` : ''
+    const round = el.round ? 'round' : ''
+    const size = el.size ? `size="${el.size}"` : ''
+    const plain = el.plain ? 'plain' : ''
+    const circle = el.circle ? 'circle' : ''
+    let child = buildElTabPaneChild(el);
+    //给他弄个默认的样式，不然前端展示可能看不清楚里面包裹的范围
+    let defaultStyle="style='position: relative;cursor: move;-webkit-box-sizing: border-box;box-sizing: border-box;border: 1px dashed #ccc;border-radius: 3px;padding: 0 2px;margin-bottom: 15px;'"
+    if (child) child = `\n${child}\n` // 换行
+    return `<${tag}  ${defaultStyle} ${icon} ${round} ${size} ${plain} ${disabled} ${circle}>${child}</${tag}>`
   }
 }
 
@@ -301,6 +331,12 @@ function attrBuilder(el) {
     placeholder: el.placeholder ? `placeholder="${el.placeholder}"` : '',
     width: el.style && el.style.width ? ':style="{width: \'100%\'}"' : '',
     disabled: el.disabled ? ':disabled=\'true\'' : ''
+  }
+}
+
+function attrConfigBuilder(el) {
+  return {
+    childrenList: el.__config__.children
   }
 }
 
@@ -333,6 +369,37 @@ function buildElSelectChild(scheme) {
   const slot = scheme.__slot__
   if (slot && slot.options && slot.options.length) {
     children.push(`<el-option v-for="(item, index) in ${scheme.__vModel__}Options" :key="index" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>`)
+  }
+  return children.join('\n')
+}
+
+/**
+ *  构建tab容器内容子节点
+ */
+function buildElTabPaneChild(scheme) {
+  const children = []
+  const slot = scheme.__slot__
+  const childrenList = scheme.__config__.children;
+
+  const childrenMap = []
+  if (childrenList) {
+    childrenList.forEach((childrenObject) =>{
+      console.log(" html conver",childrenObject);
+      let parentGroupValue = childrenObject.__config__.parentGroupValue;
+      if(!childrenMap[parentGroupValue]){
+        childrenMap[parentGroupValue] = [];
+      }
+      let str = layouts[childrenObject.__config__.layout](childrenObject)
+      childrenMap[parentGroupValue].push(str)
+    })
+  }
+
+  if (slot && slot.options && slot.options.length) {
+    slot.options.forEach((item,index)=>{
+      children.push(`<el-tab-pane key="${index}" label="${item.label}" value="${item.value}">${childrenMap[item.value]?childrenMap[item.value]:''}</el-tab-pane>`)
+    });
+
+    //children.push(`<el-tab-pane v-for="(item, index) in ${scheme.__vModel__}Options" :key="index" :label="item.label" :value="item.value" :disabled="item.disabled"></el-tab-pane>`)
   }
   return children.join('\n')
 }
