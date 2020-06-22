@@ -18,8 +18,12 @@ function loadScript(src, callback) {
     const onEnd = 'onload' in $script ? stdOnEnd.bind($script) : ieOnEnd.bind($script)
     onEnd($script)
   }
-
-  callbacks[src].push(cb)
+  if(callbacks[src]){
+    callbacks[src].push(cb)
+  }else{
+    cb(null,null);
+  }
+  
 
   function stdOnEnd(script) {
     script.onload = () => {

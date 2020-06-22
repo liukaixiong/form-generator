@@ -218,7 +218,10 @@ const tags = {
     const {
       tag, disabled, vModel, clearable, placeholder, width
     } = attrBuilder(el)
-    const options = el.options ? `:options="${el.__vModel__}Options"` : ''
+    let options = el.options ? `:options="${el.__vModel__}Options"` : ''
+    if(el.__slot__ && el.__slot__.bgConfig){
+      options = `:options="${el.__vModel__}Options"`;
+    }
     const props = el.props ? `:props="${el.__vModel__}Props"` : ''
     const showAllLevels = el['show-all-levels'] ? '' : ':show-all-levels="false"'
     const filterable = el.filterable ? 'filterable' : ''
@@ -367,7 +370,7 @@ function buildElInputChild(scheme) {
 function buildElSelectChild(scheme) {
   const children = []
   const slot = scheme.__slot__
-  if (slot && slot.options && slot.options.length) {
+  if (slot && (slot.options&&slot.options.length) || (slot.bgConfig && slot.bgConfig.length)) {
     children.push(`<el-option v-for="(item, index) in ${scheme.__vModel__}Options" :key="index" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>`)
   }
   return children.join('\n')

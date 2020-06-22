@@ -1,8 +1,6 @@
+import { converKeyValue } from '@/utils/jsonUtil'
 function vModel(self, dataObject, defaultValue) {
   dataObject.props.value = defaultValue
-
-
-
   dataObject.on.input = val => {
     self.$emit('input', val)
   }
@@ -31,15 +29,19 @@ export default {
       style: {},
     }
     const confClone = JSON.parse(JSON.stringify(this.conf))
-    
+
     const children = []
 
     const childObjs = componentChild[confClone.__config__.tag]
+
     if (childObjs) {
       Object.keys(childObjs).forEach(key => {
         const childFunc = childObjs[key]
         if (confClone.__slot__ && confClone.__slot__[key]) {
-          children.push(childFunc(h, confClone, key))
+          let childNode = childFunc(h, confClone, key)
+          if(childNode){
+            children.push(childNode);
+          }
         }
       })
     }

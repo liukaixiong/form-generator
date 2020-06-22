@@ -17,7 +17,7 @@ function resolve(dir) {
 
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/form-generator/'
+    ? '/'
     : '/',
   pages: {
     index: {
@@ -36,7 +36,8 @@ module.exports = {
     }
   },
   devServer: {
-    overlay: false
+    // overlay: false,
+    disableHostCheck: true
   },
   productionSourceMap: false,
   lintOnSave: false, // 是否在保存的时候关闭lint校验
@@ -44,7 +45,6 @@ module.exports = {
     externals: {
       vue: 'Vue',
       'vue-router': 'VueRouter',
-      axios: 'axios',
       'element-ui': 'ELEMENT'
     },
     devtool: 'source-map' // 开启源码调试

@@ -270,8 +270,8 @@ export default {
       this.resourceVisible = true
     },
     setResource(arr) {
-      const scripts = []; const
-        links = []
+      const scripts = []; 
+      const links = []
       if (Array.isArray(arr)) {
         arr.forEach(item => {
           if (item.endsWith('.css')) {

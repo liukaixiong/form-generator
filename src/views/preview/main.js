@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import { loadScriptQueue } from '@/utils/loadScript'
 import Tinymce from '@/components/tinymce'
+import dataProcess from '@/utils/dataProcess'
 
+Vue.prototype.$dataProcess = dataProcess
 Vue.component('tinymce', Tinymce)
 
 const $previewApp = document.getElementById('previewApp')

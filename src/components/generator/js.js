@@ -26,23 +26,57 @@ export function makeUpJs(formConfig, type) {
   const propsList = []
   const methodList = mixinMethod(type)
   const uploadVarList = []
+  const mountedList = [];
 
   formConfig.fields.forEach(el => {
     buildAttributes(el, dataList, ruleList, optionsList, methodList, propsList, uploadVarList)
-  })
+    buildMounted(el, mountedList);
+  });
+
+  // 处理data类型的方法
+  const dataConfig = {
+    "data": dataList.join('\n'),
+    "rules": ruleList.join('\n'),
+    "uploadVar": uploadVarList.join('\n'),
+    "selectOptions": optionsList.join('\n'),
+    "props": propsList.join('\n')
+  }
+
 
   const script = buildexport(
     formConfig,
     type,
-    dataList.join('\n'),
-    ruleList.join('\n'),
-    optionsList.join('\n'),
-    uploadVarList.join('\n'),
-    propsList.join('\n'),
+    dataConfig,
+    mountedList.join('\n'),
     methodList.join('\n')
   )
   confGlobal = null
   return script
+}
+
+function buildMounted(scheme, mounted) {
+  const config = scheme.__config__
+  if (scheme.__slot__ && scheme.__slot__.bgConfig) {
+    const slot = scheme.__slot__;
+    const bgConfig = slot.bgConfig;
+    if (bgConfig) {
+      const model = `${scheme.__vModel__}Options`;
+      const options = titleCase(model)
+      console.info(options);
+      buildInitField(model, config.tag, bgConfig, mounted)
+    }
+  }
+}
+/**
+ * 初始化字段赋值
+ * @param {*} model     字段名称
+ * @param {*} tag       字段标签类型
+ * @param {*} bgConfig  后台配置标识
+ * @param {*} mounted   初始化字段列表
+ */
+function buildInitField(model, tag, bgConfig, mounted) {
+  const str = `this.$dataProcess.get('${tag}','${bgConfig}',(response) => this.${model} = response)`
+  mounted.push(str)
 }
 
 // 构建组件属性
@@ -60,6 +94,10 @@ function buildAttributes(scheme, dataList, ruleList, optionsList, methodList, pr
       const options = titleCase(model)
       buildOptionMethod(`get${options}`, model, methodList)
     }
+  }
+  // 处理服务端传递过来的属性
+  if (scheme.options || (slot && slot.bgConfig && slot.bgConfig.length)) {
+    buildOptions(scheme, optionsList)
   }
 
   // 处理props
@@ -97,6 +135,7 @@ function mixinMethod(type) {
         this.$refs['${confGlobal.formRef}'].validate(valid => {
           if(!valid) return
           // TODO 提交表单
+
         })
       },`,
         resetForm: `resetForm() {
@@ -223,7 +262,7 @@ function buildOptionMethod(methodName, model, methodList) {
 }
 
 // js整体拼接
-function buildexport(conf, type, data, rules, selectOptions, uploadVar, props, methods) {
+function buildexport(conf, type, dataConfig, mounted, methods) {
   const str = `${exportDefault}{
   ${inheritAttrs[type]}
   components: {},
@@ -231,20 +270,22 @@ function buildexport(conf, type, data, rules, selectOptions, uploadVar, props, m
   data () {
     return {
       ${conf.formModel}: {
-        ${data}
+        ${dataConfig.data}
       },
       ${conf.formRules}: {
-        ${rules}
+        ${dataConfig.rules}
       },
-      ${uploadVar}
-      ${selectOptions}
-      ${props}
+      ${dataConfig.uploadVar}
+      ${dataConfig.selectOptions}
+      ${dataConfig.props}
     }
   },
   computed: {},
   watch: {},
   created () {},
-  mounted () {},
+  mounted () {
+    ${mounted}
+  },
   methods: {
     ${methods}
   }

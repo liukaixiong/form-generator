@@ -4,8 +4,8 @@ import axios from "axios";
 // 创建axios，赋给变量service
 // 手把手撸码前端API，地址 http://www.web-jshtml.cn/productApi
 
-const BASEURL = process.env.NODE_ENV === 'production' ? '' : '/devApi';
-const service = axios.create({
+const BASEURL = process.env.NODE_ENV === 'production' ? '' : '';
+export const service = axios.create({
     baseURL: BASEURL,  // http://192.168.0.106:8080/devApi/  == http://www.web-jshtml.cn/productapi/productapi
     timeout: 15000,   // 超时
     // 网络请求接口，假设 5000
@@ -29,7 +29,7 @@ service.interceptors.request.use(function (config) {
 
     return config;
 }, function (error) {
-// 对请求错误做些什么
+    // 对请求错误做些什么
     return Promise.reject(error);
 });
 
